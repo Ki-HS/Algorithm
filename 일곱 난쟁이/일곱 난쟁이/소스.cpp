@@ -4,14 +4,18 @@
 #include <numeric>
 using namespace std;
 
-vector < bool > calc(vector<int>n, int sum) {
+vector<bool> calc(vector<int> n, int sum)
+{
 	vector<bool> b(9, false);
 	vector<bool> e;
-	for (int i = 0; i < 8; i++) {
-		for (int j = 1; j < 9; j++) {
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 1; j < 9; j++)
+		{
 			sum -= n[i];
 			sum -= n[j];
-			if (sum == 100) {
+			if (sum == 100)
+			{
 				b[i] = true;
 				b[j] = true;
 				return b;
@@ -22,21 +26,25 @@ vector < bool > calc(vector<int>n, int sum) {
 	}
 	return e;
 }
-int main() {
+int main()
+{
 	vector<int> n;
 	int a;
-	for (int i = 0; i < 9; i++) {
+	for (int i = 0; i < 9; i++)
+	{
 		cin >> a;
 		n.push_back(a);
 	}
 	sort(n.begin(), n.end());
 	int sum = accumulate(n.begin(), n.end(), 0);
 	vector<bool> b = calc(n, sum);
-	if (!b.size())return 0;
-	for (int i = 0; i < 9; i++) {
-		if (!b[i]) {
+	if (!b.size())
+		return 0;
+	for (int i = 0; i < 9; i++)
+	{
+		if (!b[i])
+		{
 			cout << n[i] << "\n";
 		}
 	}
-
 }
