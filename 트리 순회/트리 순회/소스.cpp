@@ -4,65 +4,41 @@
 using namespace std;
 
 int n;
-int t = 0;
-void pre(vector<vector<string>> tree) {
-	
+vector<vector<string>> tree(26, vector<string>(3, ""));
+
+void pre(string root) {
+	if (root == ".")return;
+	cout << root;
+	pre(tree[root[0] - 65][1]);
+	pre(tree[root[0] - 65][2]);
 }
-void in(vector<vector<string>> tree) {
-
+void in(string root) {
+	if (root == ".")return;
+	in(tree[root[0] - 65][1]);
+	cout << root;
+	in(tree[root[0] - 65][2]);
 }
-void post(vector<vector<string>> tree) {
-
+void post(string root) {
+	if (root == ".")return;
+	post(tree[root[0] - 65][1]);
+	post(tree[root[0] - 65][2]);
+	cout << root;
 }
 
-class node {
-public:
-	node* left;
-	node* right;
-	string data;
-	node() { left = nullptr; right = nullptr; data = ""; };
-};
-class Tree {
-public:
-	node* root;
-	Tree() { root = nullptr; };
-	node* find(string a) {
-		node* target = root;
-		while (target) {
-
-		}
-	}
-};
 
 int main() {
 	cin >> n;
-	vector<vector<string>> tree(n, vector<string>(4, ""));
-	Tree T;
 	string a, b, c;
 	for (int i = 0; i < n; i++) {
-		cin >> a;
-		cin >> b;
-		cin >> c;
-		node* newNodeA = new node;
-		node* newNodeB=nullptr;
-		node* newNodeC=nullptr;
-		newNodeA->data = a;
-		if (b != ".") {
-			newNodeB = new node;
-			newNodeB->data = b;
-		}
-		if (c != ".") {
-			newNodeC = new node;
-			newNodeC->data = c;
-		}
-		if (!T.root) {
-			T.root = newNodeA;
-			T.root->left=newNodeB;
-			T.root->right = newNodeC;
-			continue;
-		}
-		
+		cin >> a>>b>>c;
 
+		tree[a[0] - 65][0] = a;
+		tree[a[0] - 65][1] = b;
+		tree[a[0] - 65][2] = c;
 	}
-	pre(tree);
+	pre("A");
+	cout << "\n";
+	in("A");
+	cout << "\n";
+	post("A");
 }
