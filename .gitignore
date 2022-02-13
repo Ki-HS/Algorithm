@@ -4,6 +4,11 @@
 ### vscode ###
 .vscode
 .vs
+Debug
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.sln
 
 
 ### C++ ###
