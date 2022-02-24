@@ -16,19 +16,34 @@ int main() {
 		arr.push_back(t);
 	}
 	sort(arr.begin(), arr.end());
-	cArr[0] = true;
-	cArr[n - 1] = true;
-	for (int i = 1; i < n - 1; i++) {
-		cArr[n * i / (n - 2) - 1] = true;
-		temp.push_back(arr[n * i / (n - 2) - 1]);
+	int left = 1;
+	int right = arr.back();
+	int mid = (left + right) / 2;
+
+	int cnt; 
+	int ans=0;
+	int a, b, q;
+
+	while (left <= right) {
+		mid = (left + right) / 2;
+		cnt = 1;
+
+		a = arr.front();
+		for (auto i = 1; i < arr.size(); i++) {
+			b = arr.at(i);
+			q = b - a;
+			if (q >= mid) {
+				a = b;
+				cnt++;
+			}
+		}
+
+		if (cnt < c)right = mid - 1;
+		else {
+			ans = mid;
+			left = mid + 1;
+		}
 	}
-	long long l = 1000000000;
-	int a = 0;
-	for (int i = 1; i <temp.size()-1; i++) {
-		if (l > abs(temp[i - 1] - temp[i]))
-			l = abs(temp[i - 1] - temp[i]);
-		if (l > abs(temp[i + 1] - temp[i]))
-			l = abs(temp[i + 1] - temp[i]);
-	}
-	cout << l;
+
+	cout << ans;
 }
