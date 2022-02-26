@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <queue>
 using namespace std;
 
 int main() {
@@ -19,62 +20,56 @@ int main() {
 			tmt[i][j] = n;
 		}
 	}
-	vector<vector<int>> temp = tmt;
-	bool status = true;
-	while (status) {
-		t++;
-		status = false;
-		for (int i = 0; i < M; i++) {
-			auto it2 = find(tmt[i].begin(), tmt[i].end(), 1);
-			int a = it2 - tmt[i].begin();
-			if (it2 == tmt[i].end()) continue;
-			if (a && temp[i][a - 1] == 0) {
-				temp[i][a - 1] = 1; status = true;
-			}
-			if (a != N - 1 && temp[i][a + 1] == 0) { 
-				temp[i][a + 1] = 1; 
-				status = true; 
-			}
-			if (i && temp[i - 1][a] == 0) {
-				temp[i - 1][a] = 1;
-				status = true; 
-			}
-			if (i != M - 1 && temp[i + 1][a] == 0) {
-				temp[i + 1][a] = 1; 
-				status = true;
-			}
-			while (it2 != tmt[i].end()) {
-				a = it2 - tmt[i].begin();
 
-				if (a && temp[i][a - 1] == 0) {
-					temp[i][a - 1] = 1; status = true;
-				}
-				if (a != N - 1 && temp[i][a + 1] == 0) {
-					temp[i][a + 1] = 1;
-					status = true;
-				}
-				if (i && temp[i - 1][a] == 0) {
-					temp[i - 1][a] = 1;
-					status = true;
-				}
-				if (i != M - 1 && temp[i + 1][a] == 0) {
-					temp[i + 1][a] = 1;
-					status = true;
-				}
-				it2 = find(it2 + 1, tmt[i].end(), 1);
-			}
+	queue<pair<int, int>> q;
+	int r = 0, c = 0;
+	for (int i = 0; i < M * N; i++) {
+		if (c == N) {
+			r++; c = 0;
 		}
-		tmt = temp;
+		if (tmt[r][c] == 1) {
+			q.push(make_pair(r, c));
+		}
+		
+
+		c++;
 	}
-	bool q = false;
+	int z = q.size();
+	while (!q.empty()) {
+		int a = q.front().first;
+		int b = q.front().second;
+		q.pop();
+		if (a != 0 && !tmt[a - 1][b]) {
+			q.push(make_pair(a - 1, b));
+			tmt[a - 1][b] = 1;
+		}
+		if (a != M - 1 && !tmt[a + 1][b]) {
+			q.push(make_pair(a + 1, b));
+			tmt[a + 1][b] = 1;
+		}
+		if (b != 0 && !tmt[a][b - 1]) {
+			q.push(make_pair(a, b - 1));
+			tmt[a][b - 1] = 1;
+		}
+		if (b != N - 1 && !tmt[a][b + 1]) {
+			q.push(make_pair(a, b + 1));
+			tmt[a][b + 1] = 1;
+		}
+		z--;
+		if (!z) {
+			z = q.size();
+			t++;
+		}
+	}
+
+	bool w = false;
 	for (int i = 0; i < M; i++) {
 		auto it2 = find(tmt[i].begin(), tmt[i].end(), 0);
 		if (it2 != tmt[i].end()) {
-			q = true;
+			w = true;
 			break;
 		}
 	}
-	if (q) cout << -1;
-	else cout << t-1;
-	
+	if (w) cout << -1;
+	else cout << t - 1;
 }
