@@ -42,37 +42,4 @@ int main() {
 
 	dfs(0, 0);
 	cout << ans;
-	//int cnt = 0;
-
-	/*queue<pair<int, int>> q;
-	q.push(make_pair(0, 0));
-	cnt++;
-	set<char> s;
-	s.insert(letter[0][0]);
-	while (!q.empty()) {
-		int a = q.front().first;
-		int b = q.front().second;
-		q.pop();
-		if (a != 0 && s.find(letter[a-1][b]) != s.end()) {
-			s.insert(letter[a - 1][b]);
-			q.push(make_pair(a - 1, b));
-			cnt++;
-		}
-		else if (a != R-1 && s.find(letter[a + 1][b]) != s.end()) {
-			s.insert(letter[a + 1][b]);
-			q.push(make_pair(a + 1, b));
-			cnt++;
-		}
-		else if (b != 0 && s.find(letter[a][b-1]) != s.end()) {
-			s.insert(letter[a][b-1]);
-			q.push(make_pair(a, b-1));
-			cnt++;
-		}
-		else if (b != C-1 && s.find(letter[a][b + 1]) != s.end()) {
-			s.insert(letter[a][b+1]);
-			q.push(make_pair(a, b+1));
-			cnt++;
-		}
-	}
-	cout << cnt;*/
 }
