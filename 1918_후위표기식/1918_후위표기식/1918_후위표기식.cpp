@@ -1,16 +1,22 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 using namespace std; 
 
 string solution(vector<string> v) {
 	int walker = 0;
 	while (v.size() != 1) {
 		auto iter1 = find(v.begin(), v.end(), "(");
-		if (iter1 != v.end()) {
-			walker = iter1 - v.begin();
+		auto titer = iter1;
+		while (iter1 != v.end()) {
+			titer = iter1;
+			iter1 = find(iter1+1, v.end(), "(");
+		}
+		if (titer != v.end()) {
+				walker = titer - v.begin();
 			vector<string> t;
-			for (int i = walker + 1; v[walker] != ")"; walker++) {
+			for (int i = walker + 1; i<v.size()&&v[i] != ")";) {
 				t.push_back(v[i]);
 				v.erase(v.begin() + i);
 			}
@@ -22,48 +28,27 @@ string solution(vector<string> v) {
 		}	
 				
 		auto iter2 = find(v.begin(), v.end(), "*");
-		if (iter2!=v.end()) {
-			walker = iter2 - v.begin();
+		auto iter3 = find(v.begin(), v.end(), "/");
+		if (iter2!=v.end()|| iter3 != v.end()) {
+			walker = (iter2 < iter3) ? iter2 - v.begin() : iter3 - v.begin();
 			string t = v[walker - 1] + v[walker + 1] + v[walker];
 			for (int i = 0; i < 3; i++) {
 				v.erase(v.begin() + walker - 1);
 			}
-			if (v.empty()) v.push_back(t);
+			if (v.empty() || v.size() == walker - 1) v.push_back(t);
 			else v.insert(v.begin() + walker - 1, t);
 			continue;
-		}
-		
-		auto iter3 = find(v.begin(), v.end(), "/");
-		if (iter3!=v.end()) {
-			walker = iter3 - v.begin();
-			string t = v[walker - 1] + v[walker + 1] + v[walker];
-			for (int i = 0; i < 3; i++) {
-				v.erase(v.begin() + walker - 1);
-			}
-			if (v.empty()) v.push_back(t);
-			else v.insert(v.begin() + walker - 1, t);
 		}
 		
 		auto iter4 = find(v.begin(), v.end(), "+");
-		if (iter4!=v.end()) {
-			walker = iter4 - v.begin();
-			string t = v[walker - 1] + v[walker + 1] + v[walker];
-			for (int i = 0; i < 3; i++) {
-				v.erase(v.begin() + walker - 1);
-			}
-			if (v.empty()) v.push_back(t);
-			else v.insert(v.begin() + walker - 1, t);
-			continue;
-		}
-		
 		auto iter5 = find(v.begin(), v.end(), "-");
-		if (iter5!=v.end()) {
-			walker = iter5 - v.begin();
+		if (iter4!=v.end()||iter5!=v.end()) {
+			walker = (iter4 < iter5) ? iter4 - v.begin() : iter5 - v.begin();
 			string t = v[walker - 1] + v[walker + 1] + v[walker];
 			for (int i = 0; i < 3; i++) {
 				v.erase(v.begin() + walker - 1);
 			}
-			if (v.empty()) v.push_back(t);
+			if (v.empty() || v.size() == walker - 1) v.push_back(t);
 			else v.insert(v.begin() + walker - 1, t);
 			continue;
 		}
