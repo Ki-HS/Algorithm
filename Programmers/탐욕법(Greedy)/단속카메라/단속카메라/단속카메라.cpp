@@ -9,8 +9,6 @@ bool cmp(vector<int>a, vector<int>b) {
 }
 
 int solution(vector<vector<int>> routes) {
-    int answer = 0;
-
     sort(routes.begin(), routes.end(),cmp);
     
     int a = 1;
